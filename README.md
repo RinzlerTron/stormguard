@@ -10,13 +10,21 @@
 
 ---
 
-## 🚀 Deploy to AWS
+## 🚀 One-Click Deploy
 
 **Prerequisites:**
 - AWS account with Amazon Bedrock access
 - Claude Sonnet 3.5 model enabled in your region
+- AWS SAM CLI installed ([install guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html))
 
-Deploy using AWS SAM - full instructions in deployment guide.
+**Deploy in 2 commands:**
+
+```bash
+sam build --use-container
+sam deploy --guided
+```
+
+After deployment, open the Lambda Function URL from the CloudFormation outputs to see the demo.
 
 ---
 
