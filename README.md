@@ -10,21 +10,26 @@
 
 ---
 
-## 🚀 One-Click Deploy
+## 🚀 Quick Deploy
 
-**Prerequisites:**
+[![Deploy to AWS](https://img.shields.io/badge/Deploy%20to-AWS-orange?logo=amazon-aws&style=for-the-badge)](https://github.com/RinzlerTron/stormguard#deployment-steps)
+
+### Prerequisites
 - AWS account with Amazon Bedrock access
 - Claude Sonnet 3.5 model enabled in your region
 - AWS SAM CLI installed ([install guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html))
 
-**Deploy in 2 commands:**
+### Deployment Steps
 
 ```bash
+# 1. Build the application
 sam build --use-container
+
+# 2. Deploy (follow prompts, accept defaults)
 sam deploy --guided
 ```
 
-After deployment, open the Lambda Function URL from the CloudFormation outputs to see the demo.
+After deployment completes, get your demo URL from the CloudFormation outputs and open it in your browser.
 
 ---
 
