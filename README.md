@@ -10,26 +10,15 @@
 
 ---
 
-## 🚀 Quick Deploy
+## 🚀 One-Click Deploy
 
-[![Deploy to AWS](https://img.shields.io/badge/Deploy%20to-AWS-orange?logo=amazon-aws&style=for-the-badge)](https://github.com/RinzlerTron/stormguard#deployment-steps)
+[![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://stormguard-deploy-bucket.s3.amazonaws.com/packaged.yaml&stackName=stormguard)
 
-### Prerequisites
+**Prerequisites:**
 - AWS account with Amazon Bedrock access
 - Claude Sonnet 3.5 model enabled in your region
-- AWS SAM CLI installed ([install guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html))
 
-### Deployment Steps
-
-```bash
-# 1. Build the application
-sam build --use-container
-
-# 2. Deploy (follow prompts, accept defaults)
-sam deploy --guided
-```
-
-After deployment completes, get your demo URL from the CloudFormation outputs and open it in your browser.
+Click the button above to deploy directly to your AWS account. After stack creation completes, find the **DemoUrl** in the Outputs tab.
 
 ---
 
