@@ -20,6 +20,22 @@
 
 Click the button above to deploy directly to your AWS account. After stack creation completes, find the **DemoUrl** in the Outputs tab.
 
+### Alternative: Deploy from Source
+
+If you prefer to build and deploy locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/RinzlerTron/stormguard.git
+cd stormguard
+
+# Build and deploy
+sam build --use-container
+sam deploy --guided
+```
+
+Requires AWS SAM CLI installed ([install guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)).
+
 ---
 
 ## Problem Statement
