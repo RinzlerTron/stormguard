@@ -1,5 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+Description: StormGuard - Multi-Agent Supply Chain AI Demo
 
 Resources:
   OrchestratorFunction:
@@ -9,36 +10,56 @@ Resources:
       Runtime: python3.12
       Handler: lambda_function.lambda_handler
       CodeUri: ./
-      Timeout: 300
-      MemorySize: 1024
+      Timeout: 300  # 5 minutes for Bedrock API calls (6 agents)
+      MemorySize: 1024  # 1GB sufficient for CSV parsing + HTML generation
       Environment:
         Variables:
-          BEDROCK_REGION: us-east-1
-          BEDROCK_MODEL: anthropic.claude-3-sonnet-20240229-v1:0
+          # Claude Sonnet 3.5 model for AI agent reasoning
+          BEDROCK_MODEL_ID: anthropic.claude-3-sonnet-20240229-v1:0
+          # S3 bucket containing supply chain data (sales, stores, products)
+          S3_BUCKET: stormguard-deploy-bucket
       Policies:
         - Statement:
+          # Allow calling Amazon Bedrock for AI agent responses
           - Effect: Allow
             Action:
               - bedrock:InvokeModel
+            Resource: '*'
+          # Allow reading supply chain data from S3
+          - Effect: Allow
+            Action:
               - s3:GetObject
               - s3:ListBucket
-            Resource: '*'
+            Resource:
+              - arn:aws:s3:::stormguard-deploy-bucket
+              - arn:aws:s3:::stormguard-deploy-bucket/*
 
   FunctionUrl:
     Type: AWS::Lambda::Url
     Properties:
       TargetFunctionArn: !Ref OrchestratorFunction
-      AuthType: NONE
+      AuthType: NONE  # Public access for demo (add auth for production)
+      Cors:
+        AllowOrigins:
+          - '*'  # Allow all origins (demo purposes)
+        AllowMethods:
+          - GET  # Frontend requests agent data via GET
+        AllowHeaders:
+          - '*'
 
   FunctionUrlPermission:
     Type: AWS::Lambda::Permission
     Properties:
       FunctionName: !Ref OrchestratorFunction
       Action: lambda:InvokeFunctionUrl
-      Principal: '*'
+      Principal: '*'  # Anyone can invoke (public demo)
       FunctionUrlAuthType: NONE
 
 Outputs:
   DemoUrl:
-    Description: "Live Demo URL"
+    Description: "Live Demo URL - Open this in your browser"
     Value: !GetAtt FunctionUrl.FunctionUrl
+
+  FunctionName:
+    Description: "Lambda Function Name - Use for monitoring/logs"
+    Value: !Ref OrchestratorFunction
